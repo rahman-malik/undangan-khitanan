@@ -1,0 +1,1374 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Undangan Khitanan – Muhammad Zayyan Malik</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Lato:wght@300;400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap");
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --gold: #c9a84c;
+        --gold2: #e8d48b;
+        --teal: #1a6b6b;
+        --teal2: #0d4040;
+        --cream: #fdf8ef;
+        --white: #ffffff;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--teal2);
+        font-family: "Lato", sans-serif;
+        color: #333;
+        min-height: 100vh;
+      }
+
+      /* ═══════════════════════════════════════════════════════
+       COVER
+    ═══════════════════════════════════════════════════════ */
+      #cover {
+        min-height: 100vh;
+        background: linear-gradient(
+          160deg,
+          var(--teal2) 0%,
+          var(--teal) 60%,
+          #2a9090 100%
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      #cover::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 20% 15%,
+            rgba(201, 168, 76, 0.18) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 50% 35% at 80% 85%,
+            rgba(201, 168, 76, 0.14) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+      }
+      .ornament-top,
+      .ornament-bottom {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0.35;
+        pointer-events: none;
+      }
+      .ornament-top {
+        top: 0;
+      }
+      .ornament-bottom {
+        bottom: 0;
+        transform: translateX(-50%) rotate(180deg);
+      }
+
+      .cover-badge {
+        background: rgba(201, 168, 76, 0.15);
+        border: 1px solid rgba(201, 168, 76, 0.45);
+        color: var(--gold2);
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        padding: 0.35rem 1.2rem;
+        border-radius: 2rem;
+        margin-bottom: 1.5rem;
+      }
+      .cover-bismillah {
+        font-family: "Amiri", serif;
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+        color: var(--gold2);
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+      }
+      .cover-subtitle {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+      }
+      .cover-child-name {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(2.2rem, 8vw, 4rem);
+        color: var(--gold);
+        text-shadow:
+          0 0 30px rgba(201, 168, 76, 0.5),
+          0 2px 8px rgba(0, 0, 0, 0.4);
+        margin-bottom: 0.4rem;
+        line-height: 1.1;
+      }
+      .cover-child-meta {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.75);
+        margin-bottom: 2.5rem;
+      }
+      .cover-divider {
+        width: 120px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        margin: 0 auto 2.5rem;
+      }
+      .btn-open {
+        background: linear-gradient(135deg, var(--gold), #a87830);
+        color: #1a0e00;
+        font-weight: 700;
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        padding: 0.85rem 2.5rem;
+        border: none;
+        border-radius: 3rem;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn-open:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(201, 168, 76, 0.55);
+      }
+
+      /* ═══════════════════════════════════════════════════════
+       MUSIK PLAYER (floating)
+    ═══════════════════════════════════════════════════════ */
+      #music-bar {
+        position: fixed;
+        bottom: 1.2rem;
+        right: 1.2rem;
+        z-index: 900;
+        display: none; /* tampil setelah undangan dibuka */
+        align-items: center;
+        gap: 0.6rem;
+        background: rgba(13, 64, 64, 0.92);
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        border-radius: 3rem;
+        padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(6px);
+      }
+      #music-bar.visible {
+        display: flex;
+      }
+      .music-toggle {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        background: var(--gold);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+      }
+      .music-toggle:hover {
+        transform: scale(1.1);
+      }
+      .music-title {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.75);
+        max-width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .music-wave {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 16px;
+      }
+      .music-wave span {
+        width: 3px;
+        background: var(--gold);
+        border-radius: 2px;
+        animation: wave 1s ease-in-out infinite;
+      }
+      .music-wave span:nth-child(1) {
+        height: 6px;
+        animation-delay: 0s;
+      }
+      .music-wave span:nth-child(2) {
+        height: 12px;
+        animation-delay: 0.15s;
+      }
+      .music-wave span:nth-child(3) {
+        height: 8px;
+        animation-delay: 0.3s;
+      }
+      .music-wave span:nth-child(4) {
+        height: 14px;
+        animation-delay: 0.1s;
+      }
+      .music-wave span:nth-child(5) {
+        height: 6px;
+        animation-delay: 0.25s;
+      }
+      .music-wave.paused span {
+        animation-play-state: paused;
+      }
+      @keyframes wave {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(1.85);
+        }
+      }
+
+      /* ═══════════════════════════════════════════════════════
+       LIGHTBOX
+    ═══════════════════════════════════════════════════════ */
+      #lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 999;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      #lightbox.active {
+        display: flex;
+      }
+      #lightbox img {
+        max-width: 96vw;
+        max-height: 88vh;
+        border-radius: 0.75rem;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+        object-fit: contain;
+      }
+      #lb-close {
+        position: absolute;
+        top: 0.9rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        line-height: 1;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #lb-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      #lb-prev,
+      #lb-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        color: #fff;
+        font-size: 1.6rem;
+        line-height: 1;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      #lb-prev {
+        left: 0.8rem;
+      }
+      #lb-next {
+        right: 0.8rem;
+      }
+      #lb-prev:hover,
+      #lb-next:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      /* ═══════════════════════════════════════════════════════
+       MAIN CARD
+    ═══════════════════════════════════════════════════════ */
+      #main {
+        display: none;
+        animation: fadeUp 0.7s ease both;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .card {
+        background: var(--cream);
+        max-width: 520px;
+        margin: 0 auto;
+        border-radius: 0;
+        overflow: hidden;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
+      }
+      @media (min-width: 521px) {
+        .card {
+          border-radius: 1.25rem;
+          margin: 2rem auto;
+        }
+        body {
+          padding: 1rem;
+        }
+      }
+
+      /* ── Header Card ── */
+      .card-header {
+        background: linear-gradient(160deg, var(--teal2), var(--teal));
+        padding: 2.5rem 2rem 3rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-header::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 40px;
+        background: var(--cream);
+        clip-path: ellipse(55% 100% at 50% 100%);
+      }
+      .header-bismillah {
+        font-family: "Amiri", serif;
+        font-size: clamp(1.6rem, 4vw, 2.2rem);
+        color: var(--gold2);
+        margin-bottom: 0.6rem;
+      }
+      .header-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 0.5rem;
+      }
+      .header-name {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: clamp(1.6rem, 6vw, 2.6rem);
+        color: var(--gold);
+        text-shadow: 0 0 20px rgba(201, 168, 76, 0.45);
+        margin-bottom: 0.3rem;
+      }
+      .header-bin {
+        font-family: "Amiri", serif;
+        font-size: 1.05rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 1.2rem;
+      }
+      .header-star {
+        color: var(--gold);
+        font-size: 1.1rem;
+        letter-spacing: 0.4em;
+      }
+
+      /* ── Generic section ── */
+      .section {
+        padding: 2rem 1.8rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .section-icon {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+      }
+      .section-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--teal);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .section-title {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 1.25rem;
+        color: var(--teal2);
+        margin-bottom: 0.4rem;
+      }
+      .section-text {
+        font-size: 0.92rem;
+        color: #555;
+        line-height: 1.7;
+      }
+      .section-text strong {
+        color: var(--teal2);
+      }
+
+      /* ── Countdown ── */
+      #countdown {
+        background: linear-gradient(135deg, var(--teal2) 0%, var(--teal) 100%);
+        padding: 2rem 1.8rem;
+        text-align: center;
+      }
+      .countdown-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        margin-bottom: 1rem;
+      }
+      .countdown-grid {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .countdown-box {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        min-width: 64px;
+      }
+      .countdown-num {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 1.8rem;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .countdown-unit {
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.55);
+        margin-top: 0.2rem;
+      }
+
+      /* ── Quote ── */
+      .quote-section {
+        background: linear-gradient(135deg, #fffdf5, #fdf3d8);
+        padding: 2rem;
+        text-align: center;
+        border-top: 2px solid rgba(201, 168, 76, 0.2);
+        border-bottom: 2px solid rgba(201, 168, 76, 0.2);
+      }
+      .quote-arabic {
+        font-family: "Amiri", serif;
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        color: var(--teal2);
+        line-height: 1.8;
+        margin-bottom: 0.6rem;
+      }
+      .quote-latin {
+        font-style: italic;
+        font-size: 0.85rem;
+        color: #777;
+        margin-bottom: 0.3rem;
+      }
+      .quote-source {
+        font-size: 0.75rem;
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      /* ── Galeri ── */
+      .gallery-section {
+        padding: 2rem 1.8rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.55rem;
+        margin-top: 1.1rem;
+      }
+      .gallery-item {
+        position: relative;
+        border-radius: 0.65rem;
+        overflow: hidden;
+        aspect-ratio: 1/1;
+        cursor: pointer;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.14);
+        background: #ddd;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s ease;
+      }
+      .gallery-item:hover img {
+        transform: scale(1.07);
+      }
+      .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(13, 64, 64, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+      .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+      }
+      /* Placeholder saat gambar belum ada */
+      .gallery-item img.broken,
+      .gallery-item img[src=""] {
+        display: none;
+      }
+      .gallery-placeholder {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: linear-gradient(135deg, #e8f4f4, #d5eded);
+        color: var(--teal2);
+        font-size: 0.7rem;
+        gap: 0.3rem;
+      }
+      .gallery-item.no-img .gallery-placeholder {
+        display: flex;
+      }
+      .gallery-item.no-img img {
+        display: none;
+      }
+
+      /* ── Map Button ── */
+      .btn-map {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--teal);
+        color: var(--white);
+        font-size: 0.88rem;
+        font-weight: 700;
+        padding: 0.75rem 1.8rem;
+        border-radius: 3rem;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn-map:hover {
+        background: var(--teal2);
+        transform: translateY(-1px);
+      }
+
+      /* ═══════════════════════════════════════════════════════
+       TRANSFER / BANK CARD
+    ═══════════════════════════════════════════════════════ */
+      .transfer-section {
+        background: linear-gradient(135deg, #fffdf5, #fdf3d8);
+        padding: 2rem 1.8rem;
+        text-align: center;
+        border-top: 2px solid rgba(201, 168, 76, 0.2);
+        border-bottom: 2px solid rgba(201, 168, 76, 0.2);
+      }
+      .bank-cards-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.3rem;
+      }
+      .bank-card {
+        border-radius: 1rem;
+        padding: 1.4rem 1.5rem 4rem;
+        max-width: 360px;
+        width: 100%;
+        margin: 0 auto;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        text-align: left;
+      }
+      /* BRI: merah */
+      .bank-card.bri {
+        background: linear-gradient(
+          135deg,
+          #00529b 0%,
+          #003d7a 55%,
+          #002d5e 100%
+        );
+      }
+      /* BCA: biru */
+      .bank-card.bca {
+        background: linear-gradient(
+          135deg,
+          #005b8e 0%,
+          #0070ba 60%,
+          #00a0dc 100%
+        );
+      }
+      /* lingkaran dekoratif */
+      .bank-card::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        pointer-events: none;
+      }
+      .bank-card::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        left: -20px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        pointer-events: none;
+      }
+      .bank-logo-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+      }
+      .bank-logo-svg {
+        width: 60px;
+        height: auto;
+        flex-shrink: 0;
+      }
+      .bank-name-lbl {
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .bank-norek-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.58);
+        margin-bottom: 0.15rem;
+      }
+      .bank-norek {
+        font-family: "Cinzel Decorative", cursive;
+        font-size: 1.3rem;
+        color: #fff;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.85rem;
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+      }
+      .bank-an-lbl {
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.58);
+        margin-bottom: 0.15rem;
+      }
+      .bank-an {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding-right: 90px; /* ruang tombol salin */
+      }
+      .bank-copy-btn {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.07em;
+        padding: 0.32rem 0.8rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        z-index: 1;
+      }
+      .bank-copy-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+      .bank-copy-btn.copied {
+        background: rgba(37, 211, 102, 0.45);
+        border-color: #25d366;
+      }
+      .transfer-note {
+        font-size: 0.78rem;
+        color: #888;
+        margin-top: 1rem;
+        font-style: italic;
+      }
+
+      /* ── RSVP ── */
+      .rsvp-section {
+        background: linear-gradient(160deg, var(--teal2), var(--teal));
+        padding: 2.2rem 2rem;
+        text-align: center;
+      }
+      .rsvp-section .section-label {
+        color: var(--gold2);
+      }
+      .rsvp-section .section-text {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .btn-wa {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: #25d366;
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 700;
+        padding: 0.85rem 2rem;
+        border-radius: 3rem;
+        text-decoration: none;
+        margin-top: 1.2rem;
+        box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn-wa:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+      }
+
+      /* ── Footer ── */
+      .card-footer {
+        background: var(--teal2);
+        padding: 1.5rem 2rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+      }
+      .card-footer span {
+        color: var(--gold);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══ LIGHTBOX ════════════════════════════════════════════════ -->
+    <div id="lightbox" role="dialog" aria-modal="true">
+      <button id="lb-close" onclick="lbClose()" aria-label="Tutup">✕</button>
+      <button id="lb-prev" onclick="lbNav(-1)" aria-label="Sebelumnya">
+        ‹
+      </button>
+      <img id="lb-img" src="" alt="Foto" />
+      <button id="lb-next" onclick="lbNav(1)" aria-label="Berikutnya">›</button>
+    </div>
+
+    <!-- ══ MUSIK PLAYER (floating) ════════════════════════════════ -->
+    <div id="music-bar">
+      <button
+        class="music-toggle"
+        id="music-toggle"
+        onclick="toggleMusic()"
+        aria-label="Play / Pause musik"
+      >
+        ▶
+      </button>
+      <span class="music-title">Sholawat Nabi 🎵</span>
+      <div class="music-wave paused" id="music-wave">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <!-- path: musik/music.mp3  (nama file asli di folder) -->
+    <audio id="bgm" loop preload="none">
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- ══ COVER ══════════════════════════════════════════════════ -->
+    <section id="cover">
+      <svg
+        class="ornament-top"
+        width="320"
+        height="90"
+        viewBox="0 0 320 90"
+        fill="none"
+      >
+        <path
+          d="M160 0 Q120 45 0 40"
+          stroke="#c9a84c"
+          stroke-width="1.2"
+          fill="none"
+        />
+        <path
+          d="M160 0 Q200 45 320 40"
+          stroke="#c9a84c"
+          stroke-width="1.2"
+          fill="none"
+        />
+        <circle cx="160" cy="0" r="4" fill="#c9a84c" />
+        <circle cx="0" cy="40" r="3" fill="#c9a84c" opacity=".5" />
+        <circle cx="320" cy="40" r="3" fill="#c9a84c" opacity=".5" />
+        <path
+          d="M80 20 Q100 35 120 20"
+          stroke="#c9a84c"
+          stroke-width=".8"
+          fill="none"
+          opacity=".6"
+        />
+        <path
+          d="M200 20 Q220 35 240 20"
+          stroke="#c9a84c"
+          stroke-width=".8"
+          fill="none"
+          opacity=".6"
+        />
+      </svg>
+
+      <div class="cover-badge">📜 Undangan Khitanan</div>
+      <div class="cover-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+      <p class="cover-subtitle">Dengan penuh rasa syukur, kami mengundang</p>
+      <div class="cover-child-name">Muhammad<br />Zayyan Malik</div>
+      <p class="cover-child-meta">Putra dari Bapak Rahman &amp; Ibu Alifah</p>
+      <div class="cover-divider"></div>
+      <p class="cover-subtitle" style="margin-bottom: 2rem">
+        Minggu, 11 Oktober 2026 &nbsp;·&nbsp; 09.00 – Selesai
+      </p>
+      <button class="btn-open" onclick="bukaUndangan()">
+        ✉️ &nbsp;Buka Undangan
+      </button>
+
+      <svg
+        class="ornament-bottom"
+        width="320"
+        height="90"
+        viewBox="0 0 320 90"
+        fill="none"
+      >
+        <path
+          d="M160 0 Q120 45 0 40"
+          stroke="#c9a84c"
+          stroke-width="1.2"
+          fill="none"
+        />
+        <path
+          d="M160 0 Q200 45 320 40"
+          stroke="#c9a84c"
+          stroke-width="1.2"
+          fill="none"
+        />
+        <circle cx="160" cy="0" r="4" fill="#c9a84c" />
+      </svg>
+    </section>
+
+    <!-- ══ MAIN CARD ═══════════════════════════════════════════════ -->
+    <div id="main">
+      <div class="card">
+        <!-- Header -->
+        <div class="card-header">
+          <p class="header-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+          <p class="header-label">
+            Kami mengundang kehadiran dalam acara Khitanan
+          </p>
+          <div class="header-name">Muhammad<br />Zayyan Malik</div>
+          <p class="header-bin">Putra dari Bapak Rahman &amp; Ibu Alifah</p>
+          <div class="header-star">✦ ✦ ✦</div>
+        </div>
+
+        <!-- Ayat -->
+        <div class="quote-section">
+          <p class="quote-arabic">
+            فِطْرَةَ اللّٰهِ الَّتِيْ فَطَرَ النَّاسَ عَلَيْهَا
+          </p>
+          <p class="quote-latin">
+            "…itulah fitrah Allah yang telah menciptakan manusia sesuai
+            dengannya…"
+          </p>
+          <p class="quote-source">QS. Ar-Rum: 30</p>
+        </div>
+
+        <!-- Putra -->
+        <div class="section">
+          <div class="section-icon">🌙</div>
+          <p class="section-label">Putra Kami</p>
+          <h2 class="section-title">Muhammad Zayyan Malik</h2>
+          <p class="section-text">
+            Putra pertama dari Bapak <strong>Rahman</strong><br />
+            dan Ibu <strong>Alifah</strong>
+          </p>
+        </div>
+
+        <!-- Countdown -->
+        <div id="countdown">
+          <p class="countdown-label">⏳ Menuju Hari Bahagia</p>
+          <div class="countdown-grid">
+            <div class="countdown-box">
+              <div class="countdown-num" id="cd-hari">00</div>
+              <div class="countdown-unit">Hari</div>
+            </div>
+            <div class="countdown-box">
+              <div class="countdown-num" id="cd-jam">00</div>
+              <div class="countdown-unit">Jam</div>
+            </div>
+            <div class="countdown-box">
+              <div class="countdown-num" id="cd-menit">00</div>
+              <div class="countdown-unit">Menit</div>
+            </div>
+            <div class="countdown-box">
+              <div class="countdown-num" id="cd-detik">00</div>
+              <div class="countdown-unit">Detik</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Waktu -->
+        <div class="section">
+          <div class="section-icon">🗓️</div>
+          <p class="section-label">Waktu Pelaksanaan</p>
+          <h2 class="section-title">Minggu, 11 Oktober 2026</h2>
+          <p class="section-text">
+            <strong>Pukul 09.00 WIB – Selesai</strong><br />
+            Resepsi &amp; Doa Bersama
+          </p>
+        </div>
+
+        <!-- Tempat -->
+        <div class="section">
+          <div class="section-icon">📍</div>
+          <p class="section-label">Lokasi Acara</p>
+          <h2 class="section-title">Kediaman Keluarga</h2>
+          <p class="section-text">
+            Kp. Cihurang RT.02/RW.07<br />
+            Desa Sindangjaya Kecamatan Cipanas<br />
+            <strong>Kabupaten Cianjur</strong>
+          </p>
+          <a
+            class="btn-map"
+            href="https://www.google.com/maps?q=-6.736053943634033,107.01880645751953&z=17&hl=id"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🗺️ &nbsp;Buka Google Maps
+          </a>
+        </div>
+
+        <!-- ── Galeri Foto ── -->
+        <!-- File: gambar/gambar1.jpeg  gambar2.jpeg  gambar3.jpeg -->
+        <div class="gallery-section">
+          <div class="section-icon">📸</div>
+          <p class="section-label">Galeri Foto</p>
+          <div class="gallery-grid">
+            <div
+              class="gallery-item"
+              id="gi0"
+              onclick="lbOpen(0)"
+              role="button"
+              tabindex="0"
+              aria-label="Lihat foto 1"
+            >
+              <img
+                src="gambar1.jpeg"
+                alt="Foto 1"
+                loading="lazy"
+                onerror="imgErr(this)"
+              />
+              <div class="gallery-overlay">🔍</div>
+              <div class="gallery-placeholder">
+                <span style="font-size: 1.6rem">🖼️</span>
+                <span>Foto 1</span>
+              </div>
+            </div>
+
+            <div
+              class="gallery-item"
+              id="gi1"
+              onclick="lbOpen(1)"
+              role="button"
+              tabindex="0"
+              aria-label="Lihat foto 2"
+            >
+              <img
+                src="gambar2.jpeg"
+                alt="Foto 2"
+                loading="lazy"
+                onerror="imgErr(this)"
+              />
+              <div class="gallery-overlay">🔍</div>
+              <div class="gallery-placeholder">
+                <span style="font-size: 1.6rem">🖼️</span>
+                <span>Foto 2</span>
+              </div>
+            </div>
+
+            <div
+              class="gallery-item"
+              id="gi2"
+              onclick="lbOpen(2)"
+              role="button"
+              tabindex="0"
+              aria-label="Lihat foto 3"
+            >
+              <img
+                src="gambar3.jpeg"
+                alt="Foto 3"
+                loading="lazy"
+                onerror="imgErr(this)"
+              />
+              <div class="gallery-overlay">🔍</div>
+              <div class="gallery-placeholder">
+                <span style="font-size: 1.6rem">🖼️</span>
+                <span>Foto 3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Transfer / Hadiah ── -->
+        <div class="transfer-section">
+          <div class="section-icon">🎁</div>
+          <p class="section-label">Kirim Hadiah &amp; Doa</p>
+          <p class="section-text">
+            Bagi yang ingin memberikan hadiah,<br />
+            dapat dikirimkan melalui transfer ke:
+          </p>
+
+          <div class="bank-cards-wrap">
+            <!-- Kartu BRI -->
+            <div class="bank-card bri">
+              <div class="bank-logo-row">
+                <!-- Logo BRI inline SVG -->
+                <svg
+                  class="bank-logo-svg"
+                  viewBox="0 0 110 40"
+                  fill="none"
+                  aria-label="Logo BCA"
+                >
+                  <text
+                    x="1"
+                    y="30"
+                    font-family="Arial Black,sans-serif"
+                    font-weight="900"
+                    font-size="30"
+                    fill="white"
+                    letter-spacing="-1"
+                  >
+                    BRI
+                  </text>
+                  <rect
+                    x="1"
+                    y="35"
+                    width="90"
+                    height="2.5"
+                    rx="1.2"
+                    fill="#e8d48b"
+                  />
+                </svg>
+                <span class="bank-name-lbl">Bank Rakyat Indonesia</span>
+              </div>
+              <p class="bank-norek-lbl">Nomor Rekening</p>
+              <div class="bank-norek" id="norek-bri">173101004236508</div>
+              <p class="bank-an-lbl">Atas Nama</p>
+              <div class="bank-an">Rahman Rahil Malik</div>
+              <button
+                class="bank-copy-btn"
+                id="cbtn-bri"
+                onclick="copyRek('norek-bri', 'cbtn-bri')"
+              >
+                📋 Salin
+              </button>
+            </div>
+
+            <!-- Kartu BCA -->
+            <div class="bank-card bca">
+              <div class="bank-logo-row">
+                <!-- Logo BCA inline SVG -->
+                <svg
+                  class="bank-logo-svg"
+                  viewBox="0 0 110 40"
+                  fill="none"
+                  aria-label="Logo BCA"
+                >
+                  <text
+                    x="1"
+                    y="30"
+                    font-family="Arial Black,sans-serif"
+                    font-weight="900"
+                    font-size="30"
+                    fill="white"
+                    letter-spacing="-1"
+                  >
+                    BCA
+                  </text>
+                  <rect
+                    x="1"
+                    y="35"
+                    width="90"
+                    height="2.5"
+                    rx="1.2"
+                    fill="#e8d48b"
+                  />
+                </svg>
+                <span class="bank-name-lbl">Bank Central Asia</span>
+              </div>
+              <p class="bank-norek-lbl">Nomor Rekening</p>
+              <div class="bank-norek" id="norek-bca">7310789202</div>
+              <p class="bank-an-lbl">Atas Nama</p>
+              <div class="bank-an">Siti Robiah (Alifiah)</div>
+              <button
+                class="bank-copy-btn"
+                id="cbtn-bca"
+                onclick="copyRek('norek-bca', 'cbtn-bca')"
+              >
+                📋 Salin
+              </button>
+            </div>
+          </div>
+          <!-- /.bank-cards-wrap -->
+
+          <p class="transfer-note">
+            * Konfirmasi transfer via WhatsApp agar kami dapat mengucapkan
+            terima kasih 🙏
+          </p>
+        </div>
+
+        <!-- RSVP -->
+        <div class="rsvp-section">
+          <div
+            class="section-icon"
+            style="font-size: 2rem; margin-bottom: 0.6rem"
+          >
+            💌
+          </div>
+          <p class="section-label">Konfirmasi Kehadiran</p>
+          <p class="section-text" style="margin-bottom: 0.3rem">
+            Kehadiran Bapak/Ibu/Saudara/i merupakan<br />
+            kehormatan dan kebahagiaan bagi kami.
+          </p>
+          <a
+            class="btn-wa"
+            href="https://wa.me/6281993015329?text=Assalamu'alaikum%2C%20saya%20akan%20hadir%20di%20acara%20khitanan%20Muhammad%20Zayyan%20Malik%20%F0%9F%99%8F"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="white">
+              <path
+                d="M16 0C7.164 0 0 7.163 0 16c0 2.822.737 5.469 2.027 7.77L0 32l8.468-2.008A15.93 15.93 0 0016 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm8.26 22.616c-.347.977-2.03 1.864-2.797 1.987-.717.116-1.617.165-2.608-.164-.602-.198-1.374-.461-2.36-.904-4.154-1.793-6.866-5.998-7.077-6.278-.208-.28-1.7-2.26-1.7-4.31 0-2.05 1.076-3.06 1.458-3.475a1.54 1.54 0 011.1-.46c.275 0 .549.004.79.016.253.012.593-.096.927.706.347.822 1.178 2.872 1.282 3.08.104.208.174.45.035.727-.14.277-.208.45-.416.694-.208.243-.437.543-.625.728-.208.209-.424.434-.182.852.243.416 1.079 1.782 2.317 2.885 1.593 1.42 2.936 1.859 3.352 2.067.416.208.659.174.903-.104.243-.278 1.04-1.214 1.317-1.63.277-.417.555-.347.936-.208.382.14 2.424 1.143 2.84 1.35.417.208.694.312.797.486.104.174.104 1.005-.243 1.982z"
+              />
+            </svg>
+            Konfirmasi via WhatsApp
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer">
+          Wassalamu'alaikum Warahmatullahi Wabarakatuh<br />
+          <span>Keluarga Besar Bapak Rahman</span>
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /#main -->
+
+    <script>
+      /* ══════════════════════════════════════════════════════
+       GALERI – path gambar (sesuai nama file di folder)
+    ══════════════════════════════════════════════════════ */
+      const PHOTOS = ["gambar1.jpeg", "gambar2.jpeg", "gambar3.jpeg"];
+      let lbIdx = 0;
+
+      // Tandai item jika gambar gagal load → tampilkan placeholder
+      function imgErr(img) {
+        const item = img.closest(".gallery-item");
+        if (item) item.classList.add("no-img");
+      }
+
+      function lbOpen(idx) {
+        const item = document.getElementById("gi" + idx);
+        if (item && item.classList.contains("no-img")) return; // jangan buka jika tidak ada foto
+        lbIdx = idx;
+        document.getElementById("lb-img").src = PHOTOS[idx];
+        document.getElementById("lightbox").classList.add("active");
+        document.body.style.overflow = "hidden";
+      }
+
+      function lbClose() {
+        document.getElementById("lightbox").classList.remove("active");
+        document.getElementById("lb-img").src = "";
+        document.body.style.overflow = "";
+      }
+
+      function lbNav(dir) {
+        lbIdx = (lbIdx + dir + PHOTOS.length) % PHOTOS.length;
+        document.getElementById("lb-img").src = PHOTOS[lbIdx];
+      }
+
+      // Tutup lightbox klik area gelap / tekan Esc
+      document
+        .getElementById("lightbox")
+        .addEventListener("click", function (e) {
+          if (e.target === this) lbClose();
+        });
+      document.addEventListener("keydown", function (e) {
+        if (!document.getElementById("lightbox").classList.contains("active"))
+          return;
+        if (e.key === "Escape") lbClose();
+        if (e.key === "ArrowLeft") lbNav(-1);
+        if (e.key === "ArrowRight") lbNav(1);
+      });
+
+      /* ══════════════════════════════════════════════════════
+       MUSIK
+       File: musik/music.mp3
+    ══════════════════════════════════════════════════════ */
+      const audio = document.getElementById("bgm");
+
+      function toggleMusic() {
+        const btn = document.getElementById("music-toggle");
+        const wave = document.getElementById("music-wave");
+        if (audio.paused) {
+          audio.play().catch(() => {});
+          btn.textContent = "⏸";
+          wave.classList.remove("paused");
+        } else {
+          audio.pause();
+          btn.textContent = "▶";
+          wave.classList.add("paused");
+        }
+      }
+
+      function tryAutoplay() {
+        audio
+          .play()
+          .then(() => {
+            document.getElementById("music-toggle").textContent = "⏸";
+            document.getElementById("music-wave").classList.remove("paused");
+          })
+          .catch(() => {
+            /* browser blokir autoplay – user klik tombol ▶ */
+          });
+      }
+
+      /* ══════════════════════════════════════════════════════
+       COPY REKENING
+    ══════════════════════════════════════════════════════ */
+      function copyRek(norekId, btnId) {
+        const val = document.getElementById(norekId).textContent.trim();
+        const btn = document.getElementById(btnId);
+        const mark = () => {
+          btn.textContent = "✅ Tersalin!";
+          btn.classList.add("copied");
+          setTimeout(() => {
+            btn.textContent = "📋 Salin";
+            btn.classList.remove("copied");
+          }, 2500);
+        };
+        if (navigator.clipboard) {
+          navigator.clipboard
+            .writeText(val)
+            .then(mark)
+            .catch(() => {
+              fallbackCopy(val);
+              mark();
+            });
+        } else {
+          fallbackCopy(val);
+          mark();
+        }
+      }
+      function fallbackCopy(text) {
+        const el = document.createElement("textarea");
+        el.value = text;
+        el.style.cssText = "position:fixed;opacity:0";
+        document.body.appendChild(el);
+        el.select();
+        try {
+          document.execCommand("copy");
+        } catch (e) {}
+        document.body.removeChild(el);
+      }
+
+      /* ══════════════════════════════════════════════════════
+       BUKA UNDANGAN
+    ══════════════════════════════════════════════════════ */
+      function bukaUndangan() {
+        document.getElementById("cover").style.display = "none";
+        const main = document.getElementById("main");
+        main.style.display = "block";
+        // Tampilkan musik bar
+        document.getElementById("music-bar").classList.add("visible");
+        window.scrollTo({ top: 0, behavior: "instant" });
+        startCountdown();
+        tryAutoplay();
+      }
+
+      /* ══════════════════════════════════════════════════════
+       COUNTDOWN
+    ══════════════════════════════════════════════════════ */
+      function startCountdown() {
+        const target = new Date("2026-10-11T09:00:00").getTime();
+        function tick() {
+          const diff = target - Date.now();
+          if (diff <= 0) {
+            ["cd-hari", "cd-jam", "cd-menit", "cd-detik"].forEach(
+              (id) => (document.getElementById(id).textContent = "00"),
+            );
+            return;
+          }
+          document.getElementById("cd-hari").textContent = String(
+            Math.floor(diff / 86400000),
+          ).padStart(2, "0");
+          document.getElementById("cd-jam").textContent = String(
+            Math.floor((diff % 86400000) / 3600000),
+          ).padStart(2, "0");
+          document.getElementById("cd-menit").textContent = String(
+            Math.floor((diff % 3600000) / 60000),
+          ).padStart(2, "0");
+          document.getElementById("cd-detik").textContent = String(
+            Math.floor((diff % 60000) / 1000),
+          ).padStart(2, "0");
+        }
+        tick();
+        setInterval(tick, 1000);
+      }
+    </script>
+  </body>
+</html>
