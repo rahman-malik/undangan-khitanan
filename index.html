@@ -367,7 +367,30 @@
       #main {
         display: none;
         animation: fadeUp .7s ease both;
+        position: relative;
+        min-height: 100vh;
+        background: linear-gradient(160deg, var(--teal2) 0%, var(--teal) 60%, #2a9090 100%);
       }
+      #main::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 60% 40% at 20% 15%, rgba(201,168,76,.13) 0%, transparent 70%),
+          radial-gradient(ellipse 50% 35% at 80% 85%, rgba(201,168,76,.10) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* particles di main */
+      #main-particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
       .card {
         background: var(--cream);
         max-width: 520px;
@@ -375,6 +398,8 @@
         border-radius: 0;
         overflow: hidden;
         box-shadow: 0 0 60px rgba(0,0,0,.5);
+        position: relative;
+        z-index: 1;
       }
       @media (min-width: 521px) {
         .card { border-radius: 1.25rem; margin: 2rem auto; }
@@ -937,12 +962,14 @@
 
     <!-- ══ MAIN CARD ═══════════════════════════════════════════════ -->
     <div id="main">
+      <!-- particles latar (sama seperti cover) -->
+      <div id="main-particles"></div>
       <div class="card">
 
         <!-- Header -->
         <div class="card-header">
           <p class="header-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
-          <p class="header-label">Kami mengundang kehadiran dalam acara Khitanan</p>
+          <p class="header-label">Assalamu’alaikum Warahmatullahi Wabarakatuh. kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara khitanan putra kami</p>
           <div class="header-name">Muhammad<br>Zayyan Malik</div>
           <p class="header-bin">Putra dari Bapak Rahman &amp; Ibu Alifah</p>
           <div class="header-star">✦ ✦ ✦</div>
@@ -955,20 +982,9 @@
           <p class="quote-source">QS. Ar-Rum: 30</p>
         </div>
 
-        <!-- Putra -->
-        <div class="section reveal">
-          <div class="section-icon">🌙</div>
-          <p class="section-label">Putra Kami</p>
-          <h2 class="section-title">Muhammad Zayyan Malik</h2>
-          <p class="section-text">
-            Putra pertama dari Bapak <strong>Rahman</strong><br>
-            dan Ibu <strong>Alifah</strong>
-          </p>
-        </div>
-
         <!-- Countdown -->
         <div id="countdown" class="reveal">
-          <p class="countdown-label">⏳ Menuju Hari Bahagia</p>
+          <p class="countdown-label">⏳ Menuju Acara</p>
           <div class="countdown-grid">
             <div class="countdown-box">
               <div class="countdown-num" id="cd-hari">00</div>
@@ -996,7 +1012,7 @@
           <h2 class="section-title">Minggu, 11 Oktober 2026</h2>
           <p class="section-text">
             <strong>Pukul 09.00 WIB – Selesai</strong><br>
-            Resepsi &amp; Doa Bersama
+            Tasyakuran &amp; Doa Bersama
           </p>
         </div>
 
@@ -1054,7 +1070,10 @@
               </div>
             </div>
           </div>
-          <p class="gallery-caption">Klik foto untuk memperbesar</p>
+          <p class="gallery-caption">
+              Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada putra kami.
+              Atas kehadiran dan doa restunya, kami ucapkan terima kasih.
+          </p>
         </div>
 
         <!-- ── Transfer / Hadiah ── -->
@@ -1124,7 +1143,7 @@
         <!-- Footer -->
         <div class="card-footer">
           Wassalamu'alaikum Warahmatullahi Wabarakatuh<br>
-          <span>Keluarga Besar Bapak Rahman</span>
+          <span>Keluarga Besar Bapak Rahman dan Ibu Alifah</span>
         </div>
 
       </div><!-- /.card -->
@@ -1134,9 +1153,9 @@
       /* ══════════════════════════════════════════════════════
          PARTICLES (cover)
       ══════════════════════════════════════════════════════ */
-      (function() {
-        const wrap = document.getElementById('particles');
-        const count = 22;
+      function spawnParticles(wrapperId, count) {
+        const wrap = document.getElementById(wrapperId);
+        if (!wrap) return;
         for (let i = 0; i < count; i++) {
           const p = document.createElement('div');
           p.className = 'particle';
@@ -1150,7 +1169,8 @@
             'opacity:0';
           wrap.appendChild(p);
         }
-      })();
+      }
+      spawnParticles('particles', 22);
 
       /* ══════════════════════════════════════════════════════
          GALERI LIGHTBOX
@@ -1289,10 +1309,10 @@
           el.scrollIntoView({ behavior: 'smooth', block: 'start' });
           idx++;
           // Jeda antar section: 1.8 detik — cukup untuk dibaca sekilas
-          setTimeout(scrollNext, 1800);
+          setTimeout(scrollNext, 3800);
         }
         // Mulai scroll setelah animasi masuk card selesai
-        setTimeout(scrollNext, 700);
+        setTimeout(scrollNext, 2200);
       }
 
       /* ══════════════════════════════════════════════════════
@@ -1307,6 +1327,8 @@
         window.scrollTo({ top: 0, behavior: 'instant' });
         startCountdown();
         tryAutoplay();
+        // Spawn partikel latar main (sama seperti cover)
+        spawnParticles('main-particles', 22);
         // Inisialisasi reveal observer
         initReveal();
         // Auto scroll per section
